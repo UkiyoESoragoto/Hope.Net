@@ -44,5 +44,11 @@ namespace Hope.Data
         {
             return _processes.FirstOrDefault(obj => obj.Id == id);
         }
+
+        public void DeleteProcessesById(Guid id)
+        {
+            var ret = _processes.FirstOrDefault(obj => obj.Id == id);
+            _processes.Remove(ret);
+        }
     }
 }
