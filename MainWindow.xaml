@@ -39,7 +39,7 @@
                     <DataGrid Grid.Row="1" ColumnWidth="*" ItemsSource="{Binding ProcessCollection}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Time" Binding="{Binding Time}"/>
+                            <DataGridTextColumn Header="Time" Binding="{Binding TimeStart}"/>
                             <DataGridTextColumn Header="Percent" Binding="{Binding Percent}"/>
                             <DataGridTemplateColumn Header="Option" Width="123">
                                 <DataGridTemplateColumn.CellTemplate>

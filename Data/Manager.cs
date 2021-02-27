@@ -17,7 +17,7 @@ namespace Hope.Data
 
         private void Init()
         {
-            _processes = new List<Process> {new Process() {Name = "123"}};
+            _processes = new List<Process> { new Process() { Name = "123" } };
         }
 
         public List<Process> GetProcesses()
@@ -27,6 +27,7 @@ namespace Hope.Data
 
         public void AddProcess(Process process)
         {
+            if (_processes.Count >= 8) return;
             _processes.Add(process);
         }
 

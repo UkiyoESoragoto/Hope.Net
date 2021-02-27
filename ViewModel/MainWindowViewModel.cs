@@ -85,13 +85,12 @@ namespace Hope.ViewModel
         {
             var obj = _manager.GetProcessesById(id);
             if (obj == null) return;
-            var ret = Tool.JsonDeepCopy(obj);
+            var ret = Helper.JsonDeepCopy(obj);
 
             var win = new ProcessInfoView(ret);
             var dialog = win.ShowDialog();
             if (!(dialog ?? false)) return;
-            _manager.DeleteProcessesById(id);
-            _manager.AddProcess(ret);
+            Helper.PropertiesTransfer(ret, obj);
             Refresh();
         }
 
