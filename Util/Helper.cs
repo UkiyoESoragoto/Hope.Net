@@ -20,7 +20,14 @@ namespace Hope.Util
             var properties = oType.GetProperties();
             foreach (var property in properties)
             {
-                property.SetValue(to, property.GetValue(@from));
+                try
+                {
+                    property.SetValue(to, property.GetValue(@from));
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
     }

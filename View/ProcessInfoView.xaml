@@ -29,11 +29,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Time Start</Label>
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Height="20" Width="50" Text="{Binding Model.TimeStartHour}" />
-                    <TextBox Height="20" Width="50" Text="{Binding Model.TimeStartMin}" />
-                    <TextBox Height="20" Width="50" Text="{Binding Model.TimeStartSec}" />
-                </StackPanel>
+                <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeStart}" />
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -41,11 +37,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Time End</Label>
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Height="20" Width="50" Text="{Binding Model.TimeStartHour}" />
-                    <TextBox Height="20" Width="50" Text="{Binding Model.TimeStartMin}" />
-                    <TextBox Height="20" Width="50" Text="{Binding Model.TimeStartSec}" />
-                </StackPanel>
+                <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeEnd}" />
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">

@@ -25,6 +25,7 @@ namespace Hope.ViewModel
             _manager = new Manager();
             UpdateCmd = new RelayCommand<Guid>(UpdateById);
             DeleteCmd = new RelayCommand<Guid>(DeleteById);
+            SwitchCmd = new RelayCommand<Guid>(Switch);
             CreateCmd = new RelayCommand(CreateProcess);
             RefreshCmd = new RelayCommand(Refresh);
             ApplyCmd = new RelayCommand(RefreshBar);
@@ -76,6 +77,7 @@ namespace Hope.ViewModel
 
         public RelayCommand<Guid> UpdateCmd { get; set; }
         public RelayCommand<Guid> DeleteCmd { get; set; }
+        public RelayCommand<Guid> SwitchCmd { get; set; }
         public RelayCommand CreateCmd { get; set; }
         public RelayCommand RefreshCmd { get; set; }
         public RelayCommand ApplyCmd { get; set; }
@@ -121,9 +123,16 @@ namespace Hope.ViewModel
             processesData?.ForEach(arg =>
             {
                 var b = new BarView(arg);
+                b.Switch();
                 b.Show();
                 BarCollection.Add(b);
             });
+        }
+
+        public void Switch(Guid id)
+        {
+
+            // Todo
         }
     }
 }

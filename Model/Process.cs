@@ -12,7 +12,7 @@ namespace Hope.Model
         private TimeSpan _timeStart;
         private TimeSpan _timeEnd;
         private double _percent = 50;
-        private int _delta = 0;
+        private double _delta = 0;
 
         public Process(Guid id)
         {
@@ -36,74 +36,45 @@ namespace Hope.Model
             set { _name = value; RaisePropertyChanged(); }
         }
 
-        public TimeSpan TimeStart
-        {
-            get => _timeStart;
-            set { _timeStart = value; RaisePropertyChanged(); }
-        }
+        public TimeSpan GetTimeStart => _timeStart;
+        public TimeSpan GetTimeEnd => _timeEnd;
 
-        public int TimeStartHour
+        public string TimeStart
         {
-            get => _timeStart.Hours;
+            get => _timeStart.ToString();
             set
             {
-                _timeStart = new TimeSpan(value, _timeStart.Minutes, _timeStart.Seconds);
+                try
+                {
+                    _timeStart = TimeSpan.Parse(value);
+                    if (_timeStart > _timeEnd) return;
+                    Delta = (_timeEnd - _timeStart).TotalSeconds;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e);
+                    return;
+                }
                 RaisePropertyChanged();
             }
         }
 
-        public int TimeStartMin
+        public string TimeEnd
         {
-            get => _timeStart.Minutes;
+            get => _timeEnd.ToString();
             set
             {
-                _timeStart = new TimeSpan(_timeStart.Hours, value, _timeStart.Seconds);
-                RaisePropertyChanged();
-            }
-        }
-
-        public int TimeStartSec
-        {
-            get => _timeStart.Seconds;
-            set
-            {
-                _timeStart = new TimeSpan(_timeStart.Hours, _timeStart.Minutes, value);
-                RaisePropertyChanged();
-            }
-        }
-
-        public TimeSpan TimeEnd
-        {
-            get => _timeEnd;
-            set { _timeEnd = value; RaisePropertyChanged(); }
-        }
-
-        public int TimeEndHour
-        {
-            get => _timeEnd.Hours;
-            set
-            {
-                _timeEnd = new TimeSpan(value, _timeEnd.Minutes, _timeEnd.Seconds);
-                RaisePropertyChanged();
-            }
-        }
-
-        public int TimEndtMin
-        {
-            get => _timeEnd.Minutes;
-            set
-            {
-                _timeEnd = new TimeSpan(_timeEnd.Hours, value, _timeEnd.Seconds);
-                RaisePropertyChanged();
-            }
-        }
-
-        public int TimEndtSec
-        {
-            get => _timeEnd.Seconds;
-            set
-            {
-                _timeEnd = new TimeSpan(_timeEnd.Hours, _timeEnd.Minutes, value);
+                try
+                {
+                    _timeEnd = TimeSpan.Parse(value);
+                    if (_timeStart > _timeEnd) return;
+                    Delta = (_timeEnd - _timeStart).TotalSeconds;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e);
+                    return;
+                }
                 RaisePropertyChanged();
             }
         }
@@ -114,7 +85,7 @@ namespace Hope.Model
             set { _percent = value >= 0 ? value : 0; RaisePropertyChanged(); }
         }
 
-        public int Delta
+        public double Delta
         {
             get => _delta;
             set { _delta = value >= 0 ? value : 0; RaisePropertyChanged(); }

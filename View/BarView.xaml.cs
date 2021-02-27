@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -29,34 +30,43 @@ namespace Hope.View
             InitializeComponent();
             _process = process;
             DataContext = new { Model = process };
-            SetLocation();
-            RefreshProcess();
+            SetUi();
+            SetTimerTick();
         }
 
         private readonly Process _process;
+        private readonly DispatcherTimer _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000 / 60.0) };
 
-        private void SetLocation()
+        public Process Process => _process;
+
+        private void SetUi()
         {
-            var x = SystemParameters.WorkArea.Width;//得到屏幕工作区域宽度
-            var y = SystemParameters.WorkArea.Height;//得到屏幕工作区域高度
-            var x1 = SystemParameters.PrimaryScreenWidth;//得到屏幕整体宽度
-            var y1 = SystemParameters.PrimaryScreenHeight;//得到屏幕整体高度
-            Width = x;//设置窗体宽s度
-            Height = 20;//设置窗体高度
-            Bar.Width = x;
+            var workAreaWidth = SystemParameters.WorkArea.Width;
+            var workAreaHeight = SystemParameters.WorkArea.Height;
+            var primaryScreenWidth = SystemParameters.PrimaryScreenWidth;
+            var primaryScreenHeight = SystemParameters.PrimaryScreenHeight;
+            Width = workAreaWidth;
+            Height = 20;
             Left = 0;
-            Top = y1 - y;
+            Top = primaryScreenHeight - workAreaHeight;
+            Bar.Width = workAreaWidth;
         }
 
-        private void RefreshProcess()
+        private void Refresh()
         {
-            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
-            timer.Start();
-            timer.Tick += (sender, args) =>
-            {
-                _process.Percent += 0.1;
-                if (_process.Percent > 100) _process.Percent = 0;
-            };
+            var now = DateTime.Now;
+            var start = DateTime.Today + _process.GetTimeStart;
+            _process.Percent = _process.Delta > 0 ? (now - start).TotalSeconds / _process.Delta * 100 : 0;
+        }
+
+        private void SetTimerTick()
+        {
+            _timer.Tick += (sender, args) => Refresh();
+        }
+
+        public void Switch()
+        {
+            if (_timer.IsEnabled) _timer.Stop(); else _timer.Start();
         }
     }
 }
