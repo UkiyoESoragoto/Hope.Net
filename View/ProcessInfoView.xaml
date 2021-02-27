@@ -1,4 +1,4 @@
-﻿<Window x:Class="Hope.View.ProcessInfo"
+﻿<Window x:Class="Hope.View.ProcessInfoView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Hope.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="ProcessInfo" Height="450" Width="500">
+        Title="ProcessInfoView" Height="450" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -29,7 +29,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Time</Label>
-                <TextBox Height="20" Grid.Column="1">Another value</TextBox>
+                <DatePicker Grid.Column="1"></DatePicker>
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">

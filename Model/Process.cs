@@ -10,7 +10,8 @@ namespace Hope.Model
         private readonly Guid _id;
         private string _name;
         private string _time;
-        private int _percent;
+        private double _percent = 50;
+        private int _order = 0;
 
         public Process(Guid id)
         {
@@ -19,10 +20,10 @@ namespace Hope.Model
 
         public Process()
         {
-            _id = new Guid();
+            _id = Guid.NewGuid();
         }
 
-        public Guid Id { get; }
+        public Guid Id => _id;
 
         public string Name
         {
@@ -36,10 +37,16 @@ namespace Hope.Model
             set { _time = value; RaisePropertyChanged(); }
         }
 
-        public int Percent
+        public double Percent
         {
             get => _percent;
-            set { _percent = value; RaisePropertyChanged(); }
+            set { _percent = value >= 0 ? value : 0; RaisePropertyChanged(); }
+        }
+
+        public int Order
+        {
+            get => _order;
+            set { _order = value >= 0 ? value : 0; RaisePropertyChanged(); }
         }
     }
 }

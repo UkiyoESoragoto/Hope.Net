@@ -27,6 +27,7 @@ namespace Hope
             InitializeComponent();
             var viewModel = new MainWindowViewModel();
             viewModel.Refresh();
+            viewModel.RefreshBar();
             DataContext = viewModel;
         }
     }

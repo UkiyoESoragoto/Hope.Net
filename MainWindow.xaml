@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hope"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Hope" Height="450" Width="800">
@@ -16,24 +17,38 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Orientation="Horizontal">
+                    <DockPanel >
+                        <TextBlock Text="Search:" VerticalAlignment="Center"/>
+                        <TextBox Height="20" Width="140"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" 
+                                 Margin="5 0 5 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding Path=RefreshCmd}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <Button Content="New" Width="70" Height="20" Command="{Binding CreateCmd}"/>
-                        <TextBox Height="20" Width="70" Text="{Binding Option.Name}" Margin="10 0 10 0"/>
-                    </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="Apply" Width="70" Height="20" Command="{Binding ApplyCmd}" Margin="5 0" />
+                            <Button Content="Cancel" Width="70" Height="20" Command="{Binding CancelCmd}" />
+                        </StackPanel>
+                    </DockPanel>
 
-                    <DataGrid Grid.Row="1" ColumnWidth="*" ItemsSource="{Binding ProcessCollection}" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid Grid.Row="1" ColumnWidth="*" ItemsSource="{Binding ProcessCollection}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Time" Binding="{Binding Time}"/>
                             <DataGridTextColumn Header="Percent" Binding="{Binding Percent}"/>
-                            <DataGridTemplateColumn Header="Option">
+                            <DataGridTemplateColumn Header="Option" Width="123">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Content="Edit" Width="70" Height="20" 
+                                            <Button Content="Edit" Width="60" Height="20" 
                                                     CommandParameter="{Binding Id}"
                                                     Command="{Binding DataContext.UpdateCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
-                                            <Button Content="Delete" Width="70" Height="20"
+                                            <Button Content="Delete" Width="60" Height="20"
                                                     CommandParameter="{Binding Id}"
                                                     Command="{Binding DataContext.DeleteCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
                                         </StackPanel>

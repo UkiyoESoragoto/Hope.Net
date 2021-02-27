@@ -14,11 +14,11 @@ using Hope.Model;
 namespace Hope.View
 {
     /// <summary>
-    /// Interaction logic for ProcessInfo.xaml
+    /// Interaction logic for ProcessInfoView.xaml
     /// </summary>
-    public partial class ProcessInfo : Window
+    public partial class ProcessInfoView : Window
     {
-        public ProcessInfo(Process process)
+        public ProcessInfoView(Process process)
 
         {
             process ??= new Process();
