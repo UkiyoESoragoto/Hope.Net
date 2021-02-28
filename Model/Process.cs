@@ -1,39 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using GalaSoft.MvvmLight;
+using static System.Windows.Media.ColorConverter;
 
 namespace Hope.Model
 {
     public class Process : ObservableObject
     {
+        private TimeSpan _delta;
+        private string _foreground = "#FFF";
         private Guid _id;
         private string _name;
-        private TimeSpan _timeStart;
+        private double _percent;
         private TimeSpan _timeEnd;
-        private double _percent = 50;
-        private double _delta = 0;
+        private TimeSpan _timeStart;
 
         public Process(Guid id)
         {
             _id = id;
+            _name = "Task";
         }
 
         public Process()
         {
             _id = Guid.NewGuid();
+            _name = "Task";
         }
 
         public Guid Id
         {
             get => _id;
-            set { _id = value; RaisePropertyChanged(); }
+            set
+            {
+                _id = value;
+                RaisePropertyChanged();
+            }
         }
 
         public string Name
         {
             get => _name;
-            set { _name = value; RaisePropertyChanged(); }
+            set
+            {
+                _name = value;
+                RaisePropertyChanged();
+            }
         }
 
         public TimeSpan GetTimeStart => _timeStart;
@@ -46,15 +56,17 @@ namespace Hope.Model
             {
                 try
                 {
+                    if (_timeStart.ToString() == value) return;
                     _timeStart = TimeSpan.Parse(value);
                     if (_timeStart > _timeEnd) return;
-                    Delta = (_timeEnd - _timeStart).TotalSeconds;
+                    Delta = (_timeEnd - _timeStart).ToString();
                 }
                 catch (Exception e) when (e is FormatException or OverflowException)
                 {
                     Console.WriteLine(e);
                     return;
                 }
+
                 RaisePropertyChanged();
             }
         }
@@ -66,15 +78,17 @@ namespace Hope.Model
             {
                 try
                 {
+                    if (_timeEnd.ToString() == value) return;
                     _timeEnd = TimeSpan.Parse(value);
                     if (_timeStart > _timeEnd) return;
-                    Delta = (_timeEnd - _timeStart).TotalSeconds;
+                    Delta = (_timeEnd - _timeStart).ToString();
                 }
                 catch (Exception e) when (e is FormatException or OverflowException)
-                { 
+                {
                     Console.WriteLine(e);
                     return;
                 }
+
                 RaisePropertyChanged();
             }
         }
@@ -82,13 +96,56 @@ namespace Hope.Model
         public double Percent
         {
             get => _percent;
-            set { _percent = value >= 0 ? value : 0; RaisePropertyChanged(); }
+            set
+            {
+                _percent = value >= 0 ? value : 0;
+                RaisePropertyChanged();
+            }
         }
 
-        public double Delta
+        public double GetDelta => _delta.TotalSeconds;
+
+        public string Delta
         {
-            get => _delta;
-            set { _delta = value >= 0 ? value : 0; RaisePropertyChanged(); }
+            get => _delta.ToString();
+            set
+            {
+                try
+                {
+                    if (_delta.ToString() == value) return;
+                    _delta = TimeSpan.Parse(value);
+                    var tmp = _timeStart + _delta;
+                    if (_timeStart > tmp) return;
+                    TimeEnd = tmp.ToString();
+                }
+                catch (Exception e) when (e is FormatException or OverflowException)
+                {
+                    Console.WriteLine(e);
+                    return;
+                }
+
+                RaisePropertyChanged();
+            }
+        }
+
+        public string ForegroundSting
+        {
+            get => _foreground;
+            set
+            {
+                try
+                {
+                    if (ConvertFromString(value) == null) return;
+                    _foreground = value;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e);
+                    return;
+                }
+
+                RaisePropertyChanged();
+            }
         }
     }
 }

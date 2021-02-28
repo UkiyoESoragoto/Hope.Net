@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 
 namespace Hope.Util
@@ -19,7 +17,6 @@ namespace Hope.Util
             var oType = typeof(T);
             var properties = oType.GetProperties();
             foreach (var property in properties)
-            {
                 try
                 {
                     property.SetValue(to, property.GetValue(@from));
@@ -28,7 +25,6 @@ namespace Hope.Util
                 {
                     Console.WriteLine(e);
                 }
-            }
         }
     }
 }

@@ -1,43 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using Hope.Model;
+using static System.Windows.Media.ColorConverter;
 
 namespace Hope.View
 {
     /// <summary>
-    /// Interaction logic for BarView.xaml
+    ///     Interaction logic for BarView.xaml
     /// </summary>
     public partial class BarView : Window
     {
+        private readonly DispatcherTimer _timer = new() {Interval = TimeSpan.FromMilliseconds(1000 / 60.0)};
+
         public BarView(Process process)
         {
             if (process == null)
             {
                 Close();
                 return;
-            };
+            }
+
+            ;
             InitializeComponent();
-            _process = process;
-            DataContext = new { Model = process };
+            Process = process;
+            DataContext = new {Model = process};
             SetUi();
             SetTimerTick();
         }
 
-        private readonly Process _process;
-        private readonly DispatcherTimer _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000 / 60.0) };
-
-        public Process Process => _process;
+        public Process Process { get; }
 
         private void SetUi()
         {
@@ -50,13 +43,17 @@ namespace Hope.View
             Left = 0;
             Top = primaryScreenHeight - workAreaHeight;
             Bar.Width = workAreaWidth;
+            Bar.Foreground =
+                new SolidColorBrush((Color?) ConvertFromString(Process.ForegroundSting) ??
+                                    Color.FromRgb(255, 255, 255));
         }
 
         private void Refresh()
         {
             var now = DateTime.Now;
-            var start = DateTime.Today + _process.GetTimeStart;
-            _process.Percent = _process.Delta > 0 ? (now - start).TotalSeconds / _process.Delta * 100 : 0;
+            var start = DateTime.Today + Process.GetTimeStart;
+            var tmp = TimeSpan.Parse(Process.Delta).TotalSeconds;
+            Process.Percent = tmp > 0 ? (now - start).TotalSeconds / tmp * 100 : 0;
         }
 
         private void SetTimerTick()
@@ -66,7 +63,8 @@ namespace Hope.View
 
         public void Switch()
         {
-            if (_timer.IsEnabled) _timer.Stop(); else _timer.Start();
+            if (_timer.IsEnabled) _timer.Stop();
+            else _timer.Start();
         }
     }
 }

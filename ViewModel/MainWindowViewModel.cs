@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Hope.Model;
 using Hope.Data;
-using Hope.View;
+using Hope.Model;
 using Hope.Util;
+using Hope.View;
 
 namespace Hope.ViewModel
 {
-    class MainWindowViewModel : ViewModelBase
+    internal class MainWindowViewModel : ViewModelBase
     {
+        private List<BarView> _barCollection;
+        private Manager _manager;
+        private Option _option;
+        private ObservableCollection<Process> _processCollection;
+
+        private string _search = string.Empty;
 
         public MainWindowViewModel()
         {
@@ -32,47 +34,54 @@ namespace Hope.ViewModel
             CancelCmd = new RelayCommand(RefreshBar);
         }
 
-        private string _search = string.Empty;
-        private Option _option;
-        private Manager _manager;
-        private ObservableCollection<Process> _processCollection;
-        private ObservableCollection<BarView> _barCollection;
-
         public string Search
         {
             get => _search;
-            set { _search = value; RaisePropertyChanged(); }
+            set
+            {
+                _search = value;
+                RaisePropertyChanged();
+            }
         }
 
         public ObservableCollection<Process> ProcessCollection
         {
             get => _processCollection;
-            set { _processCollection = value; RaisePropertyChanged(); }
+            set
+            {
+                _processCollection = value;
+                RaisePropertyChanged();
+            }
         }
 
-        public ObservableCollection<BarView> BarCollection
+        public List<BarView> BarCollection
         {
             get => _barCollection;
-            set { _barCollection = value; RaisePropertyChanged(); }
+            set
+            {
+                _barCollection = value;
+                RaisePropertyChanged();
+            }
         }
 
         public Option Option
         {
             get => _option;
-            set { _option = value; RaisePropertyChanged(); }
+            set
+            {
+                _option = value;
+                RaisePropertyChanged();
+            }
         }
 
         public Manager Manager
         {
             get => _manager;
-            set { _manager = value; RaisePropertyChanged(); }
-        }
-
-        public void Refresh()
-        {
-            var processesData = _manager.GetProcessesByName(_search);
-            ProcessCollection = new ObservableCollection<Process>();
-            processesData?.ForEach(arg => _processCollection.Add(arg));
+            set
+            {
+                _manager = value;
+                RaisePropertyChanged();
+            }
         }
 
         public RelayCommand<Guid> UpdateCmd { get; set; }
@@ -82,6 +91,13 @@ namespace Hope.ViewModel
         public RelayCommand RefreshCmd { get; set; }
         public RelayCommand ApplyCmd { get; set; }
         public RelayCommand CancelCmd { get; set; }
+
+        public void Refresh()
+        {
+            var processesData = _manager.GetProcessesByName(_search);
+            ProcessCollection = new ObservableCollection<Process>();
+            processesData?.ForEach(arg => _processCollection.Add(arg));
+        }
 
         public void UpdateById(Guid id)
         {
@@ -100,7 +116,8 @@ namespace Hope.ViewModel
         {
             var obj = _manager.GetProcessesById(id);
             if (obj == null) return;
-            var ret = MessageBox.Show($"Delete {obj.Name}?", "Confirm Option", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            var ret = MessageBox.Show($"Delete {obj.Name}?", "Confirm Option", MessageBoxButton.OKCancel,
+                MessageBoxImage.Question);
             if (ret != MessageBoxResult.OK) return;
             _manager.DeleteProcessesById(id);
             Refresh();
@@ -118,8 +135,17 @@ namespace Hope.ViewModel
 
         public void RefreshBar()
         {
-            var processesData = _manager.GetProcessesByName(string.Empty);
-            BarCollection ??= new ObservableCollection<BarView>();
+            var processesData = _manager.GetProcessesByName(string.Empty).OrderBy(arg => arg.GetDelta).ToList();
+            if (BarCollection != null)
+            {
+                BarCollection.ForEach(arg => arg.Close());
+                BarCollection.Clear();
+            }
+            else
+            {
+                BarCollection = new List<BarView>();
+            }
+
             processesData?.ForEach(arg =>
             {
                 var b = new BarView(arg);
@@ -131,7 +157,6 @@ namespace Hope.ViewModel
 
         public void Switch(Guid id)
         {
-
             // Todo
         }
     }

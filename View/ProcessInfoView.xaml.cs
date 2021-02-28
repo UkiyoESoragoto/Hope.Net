@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Hope.Model;
 using Hope.ViewModel;
 
 namespace Hope.View
 {
     /// <summary>
-    /// Interaction logic for ProcessInfoView.xaml
+    ///     Interaction logic for ProcessInfoView.xaml
     /// </summary>
     public partial class ProcessInfoView : Window
     {
+        private readonly BarViewModel _viewModel;
+
         public ProcessInfoView(Process process)
 
         {
@@ -26,8 +18,6 @@ namespace Hope.View
             _viewModel = new BarViewModel(process);
             DataContext = _viewModel;
         }
-
-        private readonly BarViewModel _viewModel;
 
         private void ButtonOkOnClick(object sender, RoutedEventArgs e)
         {
@@ -38,6 +28,10 @@ namespace Hope.View
         private void ButtonCancelOnClick(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        private void ButtonColor_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

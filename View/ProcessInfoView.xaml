@@ -3,55 +3,59 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hope.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="ProcessInfoView" Height="450" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <TabControl Name="TabControl">
             <TabItem Header="Rush">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Add a rush process" VerticalAlignment="Center" Margin="5 0"></TextBlock>
+                    <TextBlock Text="Add a rush process" VerticalAlignment="Center" Margin="5 0" />
                     <StackPanel Grid.Row="1" Orientation="Vertical" Grid.IsSharedSizeScope="True" Margin="5 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Name</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0">Time Start</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeStart, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" IsEnabled="False"/>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Delta</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.Delta, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" IsEnabled="False"/>
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.Delta, UpdateSourceTrigger=PropertyChanged}"
+                                     IsReadOnly="True" IsEnabled="False" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Time End</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeEnd, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.TimeEnd, UpdateSourceTrigger=PropertyChanged, StringFormat=hh\\:mm\\:ss}" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0">Choose</Label>
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.ForegroundSting, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </StackPanel>
                 </Grid>
@@ -59,42 +63,47 @@
             <TabItem Header="Dynamic Interval">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Add a dynamic interval process" VerticalAlignment="Center" Margin="5 0"></TextBlock>
+                    <TextBlock Text="Add a dynamic interval process" VerticalAlignment="Center" Margin="5 0" />
                     <StackPanel Grid.Row="1" Orientation="Vertical" Grid.IsSharedSizeScope="True" Margin="5 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Name</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Time Start</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeStart, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.TimeStart, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Delta</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.Delta, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" IsEnabled="False"/>
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.Delta, UpdateSourceTrigger=PropertyChanged}"
+                                     IsReadOnly="True" IsEnabled="False" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Time End</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeEnd, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.TimeEnd, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </StackPanel>
                 </Grid>
@@ -102,42 +111,47 @@
             <TabItem Header="Fixed Interval">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Add a fixed interval process" VerticalAlignment="Center" Margin="5 0"></TextBlock>
+                    <TextBlock Text="Add a fixed interval process" VerticalAlignment="Center" Margin="5 0" />
                     <StackPanel Grid.Row="1" Orientation="Vertical" Grid.IsSharedSizeScope="True" Margin="5 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Name</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Time Start</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeStart, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.TimeStart, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Delta</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.Delta, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.Delta, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0">Time End</Label>
-                            <TextBox Height="20" Grid.Column="1" Text="{Binding Model.TimeEnd, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="True" IsEnabled="False"/>
+                            <TextBox Height="20" Grid.Column="1"
+                                     Text="{Binding Model.TimeEnd, UpdateSourceTrigger=PropertyChanged}"
+                                     IsReadOnly="True" IsEnabled="False" />
                         </Grid>
                     </StackPanel>
                 </Grid>

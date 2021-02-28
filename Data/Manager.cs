@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hope.Model;
 
 namespace Hope.Data
 {
-    class Manager
+    internal class Manager
     {
+        private List<Process> _processes;
+
         public Manager()
         {
             Init();
         }
 
-        private List<Process> _processes;
-
         private void Init()
         {
-            _processes = new List<Process> { new Process() { Name = "123" } };
+            _processes = new List<Process> {new()};
         }
 
         public List<Process> GetProcesses()
