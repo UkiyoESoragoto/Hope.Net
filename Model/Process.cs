@@ -50,7 +50,7 @@ namespace Hope.Model
                     if (_timeStart > _timeEnd) return;
                     Delta = (_timeEnd - _timeStart).TotalSeconds;
                 }
-                catch (FormatException e)
+                catch (Exception e) when (e is FormatException or OverflowException)
                 {
                     Console.WriteLine(e);
                     return;
@@ -70,8 +70,8 @@ namespace Hope.Model
                     if (_timeStart > _timeEnd) return;
                     Delta = (_timeEnd - _timeStart).TotalSeconds;
                 }
-                catch (FormatException e)
-                {
+                catch (Exception e) when (e is FormatException or OverflowException)
+                { 
                     Console.WriteLine(e);
                     return;
                 }

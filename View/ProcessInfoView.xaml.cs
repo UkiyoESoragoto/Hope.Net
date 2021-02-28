@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Hope.Model;
+using Hope.ViewModel;
 
 namespace Hope.View
 {
@@ -21,13 +22,16 @@ namespace Hope.View
         public ProcessInfoView(Process process)
 
         {
-            process ??= new Process();
             InitializeComponent();
-            DataContext = new { Model = process };
+            _viewModel = new BarViewModel(process);
+            DataContext = _viewModel;
         }
+
+        private readonly BarViewModel _viewModel;
 
         private void ButtonOkOnClick(object sender, RoutedEventArgs e)
         {
+            _viewModel.Save(TabControl.SelectedIndex);
             DialogResult = true;
         }
 
