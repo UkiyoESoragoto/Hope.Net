@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
+using static System.IO.Directory;
 
 namespace Hope.Util
 {
@@ -25,6 +28,19 @@ namespace Hope.Util
                 {
                     Console.WriteLine(e);
                 }
+        }
+
+        public static string GetConfFile()
+        {
+            var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var directory = CreateDirectory(Path.Join(home, "hope.net"));
+            var configFile = Path.Join(directory.FullName, "config.json");
+            if (!File.Exists(configFile))
+            {
+                File.Create(configFile);
+            }
+
+            return configFile;
         }
     }
 }

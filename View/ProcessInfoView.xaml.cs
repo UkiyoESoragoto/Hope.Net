@@ -9,13 +9,13 @@ namespace Hope.View
     /// </summary>
     public partial class ProcessInfoView : Window
     {
-        private readonly BarViewModel _viewModel;
+        private readonly ProcessViewModel _viewModel;
 
         public ProcessInfoView(Process process)
 
         {
             InitializeComponent();
-            _viewModel = new BarViewModel(process);
+            _viewModel = new ProcessViewModel(process);
             DataContext = _viewModel;
         }
 

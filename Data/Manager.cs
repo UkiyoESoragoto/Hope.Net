@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using Hope.Model;
+using Hope.Util;
 
 namespace Hope.Data
 {
@@ -16,7 +19,7 @@ namespace Hope.Data
 
         private void Init()
         {
-            _processes = new List<Process> {new()};
+            LoadFromFile();
         }
 
         public List<Process> GetProcesses()
@@ -49,6 +52,22 @@ namespace Hope.Data
         {
             var ret = _processes.FirstOrDefault(obj => obj.Id == id);
             _processes.Remove(ret);
+        }
+
+        public void Save2File()
+        {
+            var confFile = Helper.GetConfFile();
+            var jsonUtf8Bytes = JsonSerializer.SerializeToUtf8Bytes(_processes);
+            File.WriteAllBytes(confFile, jsonUtf8Bytes);
+        }
+
+        public void LoadFromFile()
+        {
+            var confFile = Helper.GetConfFile();
+            var jsonUtf8Bytes = File.ReadAllBytes(confFile);
+
+            var readOnlySpan = new ReadOnlySpan<byte>(jsonUtf8Bytes);
+            _processes = readOnlySpan.IsEmpty ? new List<Process> { new() } : JsonSerializer.Deserialize<List<Process>>(readOnlySpan);
         }
     }
 }

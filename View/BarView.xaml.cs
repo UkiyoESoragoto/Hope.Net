@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Hope.Model;
+using Hope.ViewModel;
 using static System.Windows.Media.ColorConverter;
 
 namespace Hope.View
@@ -21,27 +22,28 @@ namespace Hope.View
                 Close();
                 return;
             }
-
-            ;
+            
             InitializeComponent();
             Process = process;
-            DataContext = new {Model = process};
+            ViewModel = new ProcessViewModel(process);
+            DataContext = ViewModel;
             SetUi();
             SetTimerTick();
         }
 
         public Process Process { get; }
+        public ProcessViewModel ViewModel { get; }
 
         private void SetUi()
         {
             var workAreaWidth = SystemParameters.WorkArea.Width;
-            var workAreaHeight = SystemParameters.WorkArea.Height;
-            var primaryScreenWidth = SystemParameters.PrimaryScreenWidth;
-            var primaryScreenHeight = SystemParameters.PrimaryScreenHeight;
+            // var workAreaHeight = SystemParameters.WorkArea.Height;
+            // var primaryScreenWidth = SystemParameters.PrimaryScreenWidth;
+            // var primaryScreenHeight = SystemParameters.PrimaryScreenHeight;
             Width = workAreaWidth;
             Height = 20;
             Left = 0;
-            Top = primaryScreenHeight - workAreaHeight;
+            Top = SystemParameters.WorkArea.Top;
             Bar.Width = workAreaWidth;
             Bar.Foreground =
                 new SolidColorBrush((Color?) ConvertFromString(Process.ForegroundSting) ??
@@ -51,7 +53,7 @@ namespace Hope.View
         private void Refresh()
         {
             var now = DateTime.Now;
-            var start = DateTime.Today + Process.GetTimeStart;
+            var start = DateTime.Today + ViewModel.GetTimeStart;
             var tmp = TimeSpan.Parse(Process.Delta).TotalSeconds;
             Process.Percent = tmp > 0 ? (now - start).TotalSeconds / tmp * 100 : 0;
         }

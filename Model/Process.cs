@@ -46,49 +46,22 @@ namespace Hope.Model
             }
         }
 
-        public TimeSpan GetTimeStart => _timeStart;
-        public TimeSpan GetTimeEnd => _timeEnd;
-
-        public string TimeStart
+        public TimeSpan TimeStart
         {
-            get => _timeStart.ToString();
+            get => _timeStart;
             set
             {
-                try
-                {
-                    if (_timeStart.ToString() == value) return;
-                    _timeStart = TimeSpan.Parse(value);
-                    if (_timeStart > _timeEnd) return;
-                    Delta = (_timeEnd - _timeStart).ToString();
-                }
-                catch (Exception e) when (e is FormatException or OverflowException)
-                {
-                    Console.WriteLine(e);
-                    return;
-                }
-
+                _timeStart = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string TimeEnd
+        public TimeSpan TimeEnd
         {
-            get => _timeEnd.ToString();
+            get => _timeEnd;
             set
             {
-                try
-                {
-                    if (_timeEnd.ToString() == value) return;
-                    _timeEnd = TimeSpan.Parse(value);
-                    if (_timeStart > _timeEnd) return;
-                    Delta = (_timeEnd - _timeStart).ToString();
-                }
-                catch (Exception e) when (e is FormatException or OverflowException)
-                {
-                    Console.WriteLine(e);
-                    return;
-                }
-
+                _timeEnd = value;
                 RaisePropertyChanged();
             }
         }
@@ -116,7 +89,7 @@ namespace Hope.Model
                     _delta = TimeSpan.Parse(value);
                     var tmp = _timeStart + _delta;
                     if (_timeStart > tmp) return;
-                    TimeEnd = tmp.ToString();
+                    TimeEnd = tmp;
                 }
                 catch (Exception e) when (e is FormatException or OverflowException)
                 {

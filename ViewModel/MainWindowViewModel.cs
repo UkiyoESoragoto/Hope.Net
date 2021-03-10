@@ -30,7 +30,7 @@ namespace Hope.ViewModel
             SwitchCmd = new RelayCommand<Guid>(Switch);
             CreateCmd = new RelayCommand(CreateProcess);
             RefreshCmd = new RelayCommand(Refresh);
-            ApplyCmd = new RelayCommand(RefreshBar);
+            ApplyCmd = new RelayCommand(Apply);
             CancelCmd = new RelayCommand(RefreshBar);
         }
 
@@ -131,6 +131,12 @@ namespace Hope.ViewModel
             if (!(dialog ?? false)) return;
             _manager.AddProcess(ret);
             Refresh();
+        }
+
+        public void Apply()
+        {
+            RefreshBar();
+            _manager.Save2File();
         }
 
         public void RefreshBar()
